@@ -19,44 +19,66 @@ var useMPQConsole;
 })(useMPQConsole = exports.useMPQConsole || (exports.useMPQConsole = {}));
 class commands {
     constructor(relativePathToMapFile, relativePathToExportFolder, useConsole = useMPQConsole.dontUseConsole) {
-        this._relativePathToMapFile = relativePathToMapFile;
-        this._absolutePathExport = path_1.default.resolve(relativePathToExportFolder);
+        this._relativePath_MPQ_MapFile = relativePathToMapFile;
+        this._relative_Export = relativePathToExportFolder;
+        this._absolutePath_Export = path_1.default.resolve(relativePathToExportFolder);
         this._useConsole = useConsole;
+        if (path_1.default.sep === '\\') { //windows needs capital Drive for mpqEditor
+            this._absolutePath_Export = this._absolutePath_Export[0].toUpperCase() + this._absolutePath_Export.substr(1, this._absolutePath_Export.length - 1);
+        }
     }
     /**
      * executeCommand
      */
-    executeCommand(command, relativeFilePath, absoluteExportPath) {
+    executeCommand(command, params) {
         if (this._useConsole === useMPQConsole.useConsole) {
-            //e.g. ./MPQEditor.exe /extract warMap.w3m * D:\GIT\Wc3MapWorker\mpq /fp  #with console
-            //e.g. ./MPQEditor.exe /extract warMap.w3m * D:\GIT\Wc3MapWorker\mpq /fp #without console
-            command = '/' + command;
+            command = '/' + command; //with and without console for MPQ Editor not relevant for MPQ2K CLI
         }
         const mpqEditorLocation = './mpq/MPQEditor.exe';
-        child_process_1.exec('dir', this.messageCallback);
-        if (path_1.default.sep === '\\') { //windows needs capital Drive for mpqEditor
-            absoluteExportPath = absoluteExportPath[0].toUpperCase() + absoluteExportPath.substr(1, absoluteExportPath.length - 1);
-        }
-        child_process_1.execFile(mpqEditorLocation, [command, relativeFilePath, absoluteExportPath, '/fp'], this.messageCallback);
+        child_process_1.execFile(mpqEditorLocation, [command, ...params], this.messageCallback);
     }
     /**
-     * Extracts the mpq file from the previous specified location
+     * Extracts the all mpq content files
      */
-    unZipMap() {
-        this.executeCommand('extract', this._relativePathToMapFile, this._absolutePathExport);
+    extractAllFromMap() {
+        const pattern = '*.lua';
+        console.log(`Extracting ${pattern} files:`);
+        console.log(`from: ${this._absolutePath_Export} ----> ${this._relativePath_MPQ_MapFile}`);
+        this.executeCommand('e', [this._relativePath_MPQ_MapFile, pattern, this._absolutePath_Export, '/fp']);
     }
     /**
-     * Packs the mpq file with the extracted files and overrides the existing map file
+     * Extracts the lua files from your mpq
      */
-    zipMap() {
-        this.executeCommand('zip', this._relativePathToMapFile, this._absolutePathExport);
+    extractLuaFromMap() {
+        const pattern = '*.lua';
+        console.log(`Extracting ${pattern} files:`);
+        console.log(`from: ${this._absolutePath_Export} ----> ${this._relativePath_MPQ_MapFile}`);
+        this.executeCommand('e', [this._relativePath_MPQ_MapFile, pattern, this._absolutePath_Export, '/fp']);
+    }
+    /**
+     * Add/Override the lua files back into your mpq (renamed files will exist twice with old and new name!)
+     */
+    packLuaBackIntoMap() {
+        const pattern = '*.lua';
+        console.log(`Adding ${pattern} files:`);
+        console.log(`from: ${this._absolutePath_Export} ----> ${this._relativePath_MPQ_MapFile}`);
+        this.executeCommand('a', [this._relativePath_MPQ_MapFile, this._relative_Export + '/' + pattern]);
+    }
+    /**
+    * Add/Override all files back into your mpq (renamed files will exist twice with old and new name!)
+    */
+    packAllBackIntoMap() {
+        const pattern = '*.*';
+        console.log(`Adding ${pattern} files:`);
+        console.log(`from: ${this._absolutePath_Export} ----> ${this._relativePath_MPQ_MapFile}`);
+        this.executeCommand('a', [this._relativePath_MPQ_MapFile, this._relative_Export + '/' + pattern]);
     }
     messageCallback(err, stdout, stderr) {
         if (err) {
-            console.log(`stderr: ${stderr}`);
+            console.log(`#ERROR: ${stderr}`);
             return;
         }
-        console.log(`stdout: ${stdout}`);
+        console.log(`#: ${stdout}`);
     }
 }
 exports.commands = commands;

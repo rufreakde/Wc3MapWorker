@@ -1,6 +1,7 @@
 "use strict";
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
 Object.defineProperty(exports, "__esModule", { value: true });
-const commands_1 = require("./src/commands");
-const Commands = new commands_1.commands('./mpq/Maps/lua.w3m', './mpq/ExtractedFiles', commands_1.useMPQConsole.useConsole);
-Commands.unZipMap();
+__export(require("./src/commands"));
 //# sourceMappingURL=index.js.map

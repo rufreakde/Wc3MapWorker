@@ -10,6 +10,8 @@
     "wc3maptranslator-ts": "^3.0.0"
   },
   "scripts": {
+    "prestart": "tsc --build",
+    "start": "node ./index.js",
     "build": "tsc --build",
     "pretest": "tsc --build",
     "test": " mocha"
