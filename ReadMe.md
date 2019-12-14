@@ -18,7 +18,8 @@ Commands.extractLuaFromMap();
 Commands.packLuaBackIntoMap();
 //... and more commands
 // PS: if you need other specific command calls just open an GitHub Issue
-// Add Input Output (how it should look like) and I add this into the lib or create it yourself make a PR I review it then ;)
+// Add Input Output (how it should look like) And I will add this to command to the lib. Or create it yourself make a PR I review it then ;)
+// The code is not complicated just some CLI calls! :)
 ```
 ```console
 NOTE: This package does modify your file system! Since it works with your local files. ;)
