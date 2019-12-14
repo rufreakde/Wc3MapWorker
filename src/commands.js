@@ -5,13 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const child_process_1 = require("child_process");
 const path_1 = __importDefault(require("path"));
-/*
-const notes = '/users/flavio/notes.txt'
-path.dirname(notes) // /users/flavio
-path.basename(notes) // notes.txt
-path.basename(notes, path.extname(notes)) //notes
-path.extname(notes) // .txt
-*/
+const util_1 = require("util");
+const execFilePromised = util_1.promisify(child_process_1.execFile);
 var useMPQConsole;
 (function (useMPQConsole) {
     useMPQConsole[useMPQConsole["useConsole"] = 1] = "useConsole";
@@ -30,55 +25,57 @@ class commands {
     /**
      * executeCommand
      */
-    executeCommand(command, params) {
+    async executeCommand(command, params) {
         if (this._useConsole === useMPQConsole.useConsole) {
             command = '/' + command; //with and without console for MPQ Editor not relevant for MPQ2K CLI
         }
         const mpqEditorLocation = './mpq/MPQEditor.exe';
-        child_process_1.execFile(mpqEditorLocation, [command, ...params], this.messageCallback);
+        const promise = await execFilePromised(mpqEditorLocation, [command, ...params]);
+        return promise;
     }
     /**
      * Extracts the all mpq content files
      */
-    extractAllFromMap() {
-        const pattern = '*.lua';
-        console.log(`Extracting ${pattern} files:`);
-        console.log(`from: ${this._absolutePath_Export} ----> ${this._relativePath_MPQ_MapFile}`);
-        this.executeCommand('e', [this._relativePath_MPQ_MapFile, pattern, this._absolutePath_Export, '/fp']);
+    async extractAllFromMap(printInformation = true) {
+        const pattern = 'war*.*';
+        if (printInformation) {
+            console.log(`Extracting ${pattern} files:`);
+            console.log(`from: ${this._absolutePath_Export} ----> ${this._relativePath_MPQ_MapFile}`);
+        }
+        return await this.executeCommand('e', [this._relativePath_MPQ_MapFile, pattern, this._absolutePath_Export, '/fp']);
     }
     /**
      * Extracts the lua files from your mpq
      */
-    extractLuaFromMap() {
+    async extractLuaFromMap(printInformation = true) {
         const pattern = '*.lua';
-        console.log(`Extracting ${pattern} files:`);
-        console.log(`from: ${this._absolutePath_Export} ----> ${this._relativePath_MPQ_MapFile}`);
-        this.executeCommand('e', [this._relativePath_MPQ_MapFile, pattern, this._absolutePath_Export, '/fp']);
+        if (printInformation) {
+            console.log(`Extracting ${pattern} files:`);
+            console.log(`from: ${this._absolutePath_Export} ----> ${this._relativePath_MPQ_MapFile}`);
+        }
+        return await this.executeCommand('e', [this._relativePath_MPQ_MapFile, pattern, this._absolutePath_Export, '/fp']);
     }
     /**
      * Add/Override the lua files back into your mpq (renamed files will exist twice with old and new name!)
      */
-    packLuaBackIntoMap() {
+    async packLuaBackIntoMap(printInformation = true) {
         const pattern = '*.lua';
-        console.log(`Adding ${pattern} files:`);
-        console.log(`from: ${this._absolutePath_Export} ----> ${this._relativePath_MPQ_MapFile}`);
-        this.executeCommand('a', [this._relativePath_MPQ_MapFile, this._relative_Export + '/' + pattern]);
+        if (printInformation) {
+            console.log(`Adding ${pattern} files:`);
+            console.log(`from: ${this._absolutePath_Export} ----> ${this._relativePath_MPQ_MapFile}`);
+        }
+        return await this.executeCommand('a', [this._relativePath_MPQ_MapFile, this._relative_Export + '/' + pattern]);
     }
     /**
     * Add/Override all files back into your mpq (renamed files will exist twice with old and new name!)
     */
-    packAllBackIntoMap() {
-        const pattern = '*.*';
-        console.log(`Adding ${pattern} files:`);
-        console.log(`from: ${this._absolutePath_Export} ----> ${this._relativePath_MPQ_MapFile}`);
-        this.executeCommand('a', [this._relativePath_MPQ_MapFile, this._relative_Export + '/' + pattern]);
-    }
-    messageCallback(err, stdout, stderr) {
-        if (err) {
-            console.log(`#ERROR: ${stderr}`);
-            return;
+    async packAllBackIntoMap(printInformation = true) {
+        const pattern = 'war*.*';
+        if (printInformation) {
+            console.log(`Adding ${pattern} files:`);
+            console.log(`from: ${this._absolutePath_Export} ----> ${this._relativePath_MPQ_MapFile}`);
         }
-        console.log(`#: ${stdout}`);
+        return await this.executeCommand('a', [this._relativePath_MPQ_MapFile, this._relative_Export + '/' + pattern]);
     }
 }
 exports.commands = commands;

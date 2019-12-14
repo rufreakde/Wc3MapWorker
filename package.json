@@ -14,7 +14,7 @@
     "start": "node ./index.js",
     "build": "tsc --build",
     "pretest": "tsc --build",
-    "test": " mocha"
+    "test": "mocha --timeout 9999"
   },
   "devDependencies": {},
   "author": "",

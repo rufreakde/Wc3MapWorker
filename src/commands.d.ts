@@ -11,23 +11,37 @@ export declare class commands {
     /**
      * executeCommand
      */
-    executeCommand(command: string, params: string[]): void;
+    executeCommand(command: string, params: string[]): Promise<{
+        stdout: string;
+        stderr: string;
+    }>;
     /**
      * Extracts the all mpq content files
      */
-    extractAllFromMap(): void;
+    extractAllFromMap(printInformation?: boolean): Promise<{
+        stdout: string;
+        stderr: string;
+    }>;
     /**
      * Extracts the lua files from your mpq
      */
-    extractLuaFromMap(): void;
+    extractLuaFromMap(printInformation?: boolean): Promise<{
+        stdout: string;
+        stderr: string;
+    }>;
     /**
      * Add/Override the lua files back into your mpq (renamed files will exist twice with old and new name!)
      */
-    packLuaBackIntoMap(): void;
+    packLuaBackIntoMap(printInformation?: boolean): Promise<{
+        stdout: string;
+        stderr: string;
+    }>;
     /**
     * Add/Override all files back into your mpq (renamed files will exist twice with old and new name!)
     */
-    packAllBackIntoMap(): void;
-    private messageCallback;
+    packAllBackIntoMap(printInformation?: boolean): Promise<{
+        stdout: string;
+        stderr: string;
+    }>;
 }
 //# sourceMappingURL=commands.d.ts.map
