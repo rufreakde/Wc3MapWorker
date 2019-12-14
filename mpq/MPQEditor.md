@@ -1,4 +1,4 @@
-# 1 What is here?
+# 1 What is here? (Folder)
 This is the directory where I store my MPQEditor that I currently use. As well As a test map.
 * ./ExtractedFiles/ - Folder where I link my extract commands to (2. parameter)
 * ./ListFiles/ - Currently not used but stored here I do not work with protection atm
@@ -8,9 +8,8 @@ This is the directory where I store my MPQEditor that I currently use. As well A
 const Commands = new commands('./mpq/Maps/lua.w3m', './mpq/ExtractedFiles', useConsole.useConsole);
 ```
 
-# 2 
-What is the content if this ReadMe?
-Everything below are references I have found to MPQ files and how you can use the mpq2k CLI and also the MPQEditor CLI (which should be a super set of the former).
+# 2 What is explained here? (ReadMe)
+Everything written here are references I found about MPQ files. This includes information about usage of the mpq2k CLI and also the MPQEditor CLI (which should be a super set of the former).
 
 # 3. Commands of MPQEditor (short)
 ### Opening a single MPQ
