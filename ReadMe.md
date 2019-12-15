@@ -17,7 +17,7 @@ Navigate inside the project
 Install: `npm install`  
 Use it in another project then like this:  
 navigate into your project you work in
-`npm install /absolute/path/to/viking`  
+`npm install /absolute/path/to/Wc3MapWorker`  
 
 ```ts
 import { commands, useMPQConsole as useConsole } from './src/commands';
