@@ -4,6 +4,7 @@ export declare enum useMPQConsole {
 }
 export declare class commands {
     _relativePath_MPQ_MapFile: string;
+    _absolutePath_MPQ_MapFile: string;
     _absolutePath_Export: string;
     _relative_Export: string;
     _useConsole: useMPQConsole;
@@ -37,7 +38,7 @@ export declare class commands {
         stderr: string;
     }>;
     /**
-    * Add/Override all files back into your mpq (renamed files will exist twice with old and new name!)
+    * Add/Override all files back into your mpq (renamed files will exist twice with old and new name!)le
     */
     packAllBackIntoMap(printInformation?: boolean): Promise<{
         stdout: string;
