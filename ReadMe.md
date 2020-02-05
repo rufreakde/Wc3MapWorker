@@ -10,6 +10,15 @@
 >An executable of used [MPQEditor](http://www.zezula.net/en/mpq/download.html) is already in this repository you can override it with a newer version if you want. (commands should not break)
 
 # 2. Usage
+Clone the Project
+`git clone https://github.com/rufreakde/Wc3MapWorker.git`  
+Navigate inside the project
+`cd Wc3MapWorker`  
+Install: `npm install`  
+Use it in another project then like this:  
+navigate into your project you work in
+`npm install /absolute/path/to/Wc3MapWorker`  
+
 ```ts
 import { commands, useMPQConsole as useConsole } from './src/commands';
 
