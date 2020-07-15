@@ -30,7 +30,8 @@ class commands {
         if (this._useConsole === useMPQConsole.useConsole) {
             command = '/' + command; //with and without console for MPQ Editor not relevant for MPQ2K CLI
         }
-        const mpqEditorLocation = path_1.default.resolve('./mpq/MPQEditor.exe');
+        // TODO ERROR here in relative path when linked!
+        const mpqEditorLocation = path_1.default.resolve(__dirname, '..', 'mpq', 'MPQEditor.exe');
         const promise = await execFilePromised(mpqEditorLocation, [command, ...params]);
         return promise;
     }

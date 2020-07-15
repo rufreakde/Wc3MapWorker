@@ -5,7 +5,6 @@
   "main": "index.js",
   "dependencies": {
     "@types/mocha": "^5.2.7",
-    "@types/node": "^12.12.16",
     "mocha": "^6.2.2",
     "wc3maptranslator": "^3.0.0"
   },
@@ -16,7 +15,9 @@
     "pretest": "tsc --build",
     "test": "mocha --timeout 9999"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^12.12.26"
+  },
   "author": "rufreakde",
   "license": "SEE LICENSE IN LICENSE",
   "directories": {

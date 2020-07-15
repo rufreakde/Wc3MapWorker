@@ -1,5 +1,6 @@
 import { execFile, ExecException } from 'child_process';
 import path from 'path';
+import * as fs from "fs";
 
 import { promisify } from 'util';
 const execFilePromised = promisify(execFile);
@@ -37,7 +38,8 @@ export class commands {
     if (this._useConsole === useMPQConsole.useConsole) {
       command = '/' + command; //with and without console for MPQ Editor not relevant for MPQ2K CLI
     }
-    const mpqEditorLocation = path.resolve('./mpq/MPQEditor.exe');
+    // TODO ERROR here in relative path when linked!
+    const mpqEditorLocation = path.resolve(__dirname, '..', 'mpq', 'MPQEditor.exe');
     const promise: { stdout: any, stderr: string } = await execFilePromised(mpqEditorLocation, [command, ...params]);
     return promise;
   }
