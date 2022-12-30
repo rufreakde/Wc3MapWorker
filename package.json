@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@types/mocha": "^5.2.7",
-    "mocha": "^6.2.2",
+    "mocha": "^10.2.0",
     "wc3maptranslator": "^3.0.0"
   },
   "scripts": {
